@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Portfolio Premium</title>
+<style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{background:#0a0a0a;color:white;overflow-x:hidden;scroll-behavior:smooth;}
+a{text-decoration:none;color:white;}
+
+/* NAVIGATION */
+nav{
+position:fixed;top:0;width:100%;display:flex;justify-content:center;
+background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);padding:15px;z-index:10;
+}
+nav a{
+margin:0 20px;font-weight:bold;color:#00eaff;
+transition:0.3s;
+}
+nav a:hover{color:#ff00ff;}
+
+/* HERO SECTION */
+.hero-container{
+display:flex;
+align-items:center;
+justify-content:space-between;
+width:100%;
+max-width:1200px;
+margin:0 auto;
+position:relative;
+overflow:hidden;
+}
+
+.hero-text{
+width:50%;
+text-align:left;
+z-index:1;
+}
+
+.hero-image{
+width:55%;
+transform:translate(0,0);
+transition:transform 0.2s ease-out;
+}
+.hero-image img{
+width:70%;
+height:auto;
+border-radius:20px;
+transition:transform 0.5s, opacity 0.5s;
+}
+.hero-image img:hover{
+transform:scale(1.05);
+opacity:1;
+}
+
+/* SECTIONS */
+section{min-height:100vh;padding:100px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;}
+h1{font-size:55px;color:#00eaff;text-shadow:0 0 15px #00eaff;}
+h2{font-size:35px;color:#ff00ff;margin:20px 0;text-shadow:0 0 10px #ff00ff;}
+p{font-size:18px;max-width:700px;margin:10px auto;line-height:1.6;color:#ccc;}
+
+/* BUTTONS */
+button{
+padding:10px 25px;margin-top:20px;border:none;border-radius:25px;
+background:linear-gradient(45deg,#00eaff,#ff00ff);
+color:white;font-size:16px;cursor:pointer;box-shadow:0 0 15px #00eaff;
+transition:0.3s;
+}
+button:hover{transform:scale(1.1);box-shadow:0 0 25px #ff00ff;}
+
+/* SKILLS */
+.skill-bar{width:300px;height:25px;background:rgba(255,255,255,0.1);border-radius:15px;margin:15px 0;overflow:hidden;}
+.skill-bar-inner{height:100%;width:0%;background:linear-gradient(90deg,#00eaff,#ff00ff);border-radius:15px;transition:1s;}
+
+/* PROJECT CARDS FLIP */
+.projects{display:flex;flex-wrap:wrap;justify-content:center;margin-top:30px;perspective:1000px;}
+.project-card{
+width:250px;height:180px;margin:15px;
+position:relative;transform-style:preserve-3d;transition:transform 0.8s;
+cursor:pointer;
+}
+.project-card:hover{transform:rotateY(180deg);}
+.project-front, .project-back{
+position:absolute;top:0;left:0;width:100%;height:100%;
+border-radius:15px;
+display:flex;align-items:center;justify-content:center;text-align:center;
+backface-visibility:hidden;
+background:rgba(255,255,255,0.05);
+box-shadow:0 0 10px rgba(0,255,255,0.3);
+}
+.project-front h3{color:#00eaff;}
+.project-back{
+transform:rotateY(180deg);
+background:rgba(255,255,255,0.1);
+color:#fff;
+}
+
+/* CONTACT */
+.contact input, .contact textarea{
+width:300px;padding:10px;margin:10px 0;border-radius:10px;border:none;
+background:rgba(255,255,255,0.1);color:white;font-size:16px;
+}
+.contact input:focus, .contact textarea:focus{outline:none;box-shadow:0 0 15px #00eaff;}
+.contact button{margin-top:10px;}
+
+/* CHAIN CANVAS */
+#chain{
+position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;
+background:#0a0a0a;
+}
+
+/* MEDIA QUERIES */
+@media(max-width:768px){
+.hero-container{
+flex-direction:column;
+text-align:center;
+}
+.hero-text,.hero-image{
+width:90%;
+}
+.hero-image img{margin-top:20px;}
+.projects{flex-direction:column;align-items:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- CHAIN CANVAS -->
+<canvas id="chain"></canvas>
+
+<!-- NAV -->
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#skills">Skills</a>
+<a href="#projects">Projects</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+<div class="hero-container">
+  <div class="hero-text">
+    <h1>Hi, I'm Amit kumar</h1>
+    <h2>Frontend Developer & Designer</h2>
+    <p>Welcome to my interactive portfolio. Explore my projects and skills below.</p>
+    <button onclick="document.location='#projects'">View Projects</button>
+  </div>
+  <div class="hero-image">
+    <img src="assets/ssc.png" alt="Business Woman">
+  </div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+<h1>About Me</h1>
+<p>I build modern, responsive websites with interactive animations and neon-futuristic UI. I love clean code and visually appealing designs that impress clients.</p>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+<h1>My Skills</h1>
+<div class="skill-bar"><div class="skill-bar-inner" data-width="90%"></div></div>
+<p>HTML & CSS</p>
+<div class="skill-bar"><div class="skill-bar-inner" data-width="85%"></div></div>
+<p>JavaScript</p>
+<div class="skill-bar"><div class="skill-bar-inner" data-width="75%"></div></div>
+<p>React & UI Design</p>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<h1>Projects</h1>
+<div class="projects">
+<div class="project-card">
+  <div class="project-front"><h3>Portfolio Website</h3></div>
+  <div class="project-back"><p>Interactive neon portfolio with animations.</p></div>
+</div>
+<div class="project-card">
+  <div class="project-front"><h3>E-commerce App</h3></div>
+  <div class="project-back"><p>Responsive shopping website with effects.</p></div>
+</div>
+<div class="project-card">
+  <div class="project-front"><h3>Landing Page</h3></div>
+  <div class="project-back"><p>Futuristic landing page with chain background.</p></div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<h1>Contact Me</h1>
+<div class="contact">
+<input type="text" placeholder="Your Name">
+<input type="email" placeholder="Your Email">
+<textarea rows="5" placeholder="Your Message"></textarea>
+<button>Send Message</button>
+</div>
+</section>
+
+<!-- CHAIN + HERO PARALLAX SCRIPT -->
+<script>
+const canvas=document.getElementById("chain");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+// Chain particles
+let nodes=[];
+const nodeCount=100;
+class Node{
+constructor(){
+this.x=Math.random()*canvas.width;
+this.y=Math.random()*canvas.height;
+this.vx=(Math.random()-0.5)*0.5;
+this.vy=(Math.random()-0.5)*0.5;
+}
+update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width)this.vx*=-1;if(this.y<0||this.y>canvas.height)this.vy*=-1;}
+draw(){ctx.beginPath();ctx.arc(this.x,this.y,2,"0",Math.PI*2);ctx.fillStyle="#00eaff";ctx.fill();}
+}
+for(let i=0;i<nodeCount;i++){nodes.push(new Node());}
+
+function drawChain(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+for(let i=0;i<nodes.length;i++){
+nodes[i].update();
+nodes[i].draw();
+for(let j=i+1;j<nodes.length;j++){
+let dx=nodes[i].x-nodes[j].x;
+let dy=nodes[i].y-nodes[j].y;
+let dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<120){
+ctx.beginPath();
+ctx.strokeStyle="rgba(0,255,255,"+(1-dist/120)+")";
+ctx.lineWidth=1;
+ctx.moveTo(nodes[i].x,nodes[i].y);
+ctx.lineTo(nodes[j].x,nodes[j].y);
+ctx.stroke();
+}
+}
+}
+requestAnimationFrame(drawChain);
+}
+drawChain();
+window.onresize=()=>{canvas.width=innerWidth;canvas.height=innerHeight;}
+
+// Skill bars animation
+const skillBars=document.querySelectorAll('.skill-bar-inner');
+window.addEventListener('scroll',()=>{
+skillBars.forEach(bar=>{
+const rect=bar.getBoundingClientRect();
+if(rect.top<window.innerHeight-50){bar.style.width=bar.getAttribute('data-width');}
+});
+});
+
+// Hero parallax
+const heroImg=document.querySelector('.hero-image img');
+document.addEventListener('mousemove',e=>{
+let x=(e.clientX - window.innerWidth/2)/50;
+let y=(e.clientY - window.innerHeight/2)/50;
+heroImg.style.transform=`translate(${x}px, ${y}px)`;
+});
+</script>
+
+</body>
+</html>
